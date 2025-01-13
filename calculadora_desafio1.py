@@ -9,6 +9,48 @@ def calculadora(consumo: list, tarifa: float, classe: str) -> tuple:
 
     # Desenvolva seu código aqui #
 
+    #somando o total de consumo
+    total_consumo = sum(consumo)
+    consumo_mensal = total_consumo / 3
+
+    #residencial
+    if classe == "Residencial":
+        if consumo_mensal < 10000:
+            desconto_aplicado = 0.18
+            cobertura = 0.90
+        elif consumo_mensal >= 10000 and consumo_mensal <= 20000:
+            desconto_aplicado = 0.22
+            cobertura = 0.95
+        else:
+            desconto_aplicado = 0.25
+            cobertura = 0.99
+    #comercial
+    if classe == "Comercial":
+        if consumo_mensal < 10000:
+            desconto_aplicado = 0.16
+            cobertura = 0.90
+        elif consumo_mensal >= 10000 and consumo_mensal <= 20000:
+            desconto_aplicado = 0.18
+            cobertura = 0.95
+        else:
+            desconto_aplicado = 0.22
+            cobertura = 0.99
+    #industrial
+    if classe == "Industrial":
+        if consumo_mensal < 10000:
+            desconto_aplicado = 0.12
+            cobertura = 0.90
+        elif consumo_mensal >= 10000 and consumo_mensal <= 20000:
+            desconto_aplicado = 0.15
+            cobertura = 0.95
+        else:
+            desconto_aplicado = 0.18
+            cobertura = 0.99
+
+    #soma dos descontos mensal e anual
+    economia_mensal = consumo_mensal * tarifa * cobertura * desconto_aplicado
+    economia_anual = economia_mensal * 12
+
     return (
         round(economia_anual, 2),
         round(economia_mensal, 2),
@@ -24,7 +66,7 @@ if __name__ == "__main__":
         1349.86,
         112.49,
         0.12,
-        0.90,
+        0.90
     )  # BANDEIRA VERMELHA 2
 
     assert calculadora([1000, 1054, 1100], 0.84432, "Residencial") == (
@@ -38,8 +80,9 @@ if __name__ == "__main__":
         1097.6,
         91.47,
         0.16,
-        0.90
+        0.9
     )  # BANDEIRA AMARELA
+
 
     assert calculadora([15000, 14000, 16000], 0.844320, "Industrial") == (
         21656.81,
@@ -47,6 +90,7 @@ if __name__ == "__main__":
         0.15,
         0.95
     )  # BANDEIRA VERMELHA 1
+    
 
     assert calculadora([12000, 11000, 11400], 0.79969, "Residencial") == (
         22997.8,
@@ -82,6 +126,6 @@ if __name__ == "__main__":
         0.22,
         0.99
     )  # BANDEIRA VERDE
+    #valor da tarifa inconsistente com o valor apresentado pela CEMIG e pelo exemplo de linha 95
 
     print("Todos os testes passaram!")
-    
